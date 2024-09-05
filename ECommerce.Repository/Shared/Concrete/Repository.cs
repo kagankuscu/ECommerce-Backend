@@ -1,9 +1,10 @@
 using System.Linq.Expressions;
 using ECommerce.DataAccess;
 using ECommerce.Models.Models;
+using ECommerce.Repository.Shared.Abstract;
 using Microsoft.EntityFrameworkCore;
 
-namespace ECommerce.Repository.Abstract;
+namespace ECommerce.Repository.Shared.Concrete;
 public class Repository<T> : IRepository<T> where T : BaseModel
 {
     private readonly ApplicationDbContext _context;

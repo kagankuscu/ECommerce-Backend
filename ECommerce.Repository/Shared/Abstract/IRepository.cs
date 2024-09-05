@@ -1,8 +1,8 @@
 using System.Linq.Expressions;
 using ECommerce.Models.Models;
 
-namespace ECommerce.Repository.Abstract;
-public interface IRepository<T> where T : BaseModel 
+namespace ECommerce.Repository.Shared.Abstract;
+public interface IRepository<T> where T : BaseModel
 {
     bool Add(T entity);
     bool AddRange(IEnumerable<T> entities);
