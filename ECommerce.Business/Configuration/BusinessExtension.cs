@@ -1,4 +1,5 @@
-﻿using ECommerce.Repository.Abstract;
+﻿using ECommerce.Repository.Shared.Abstract;
+using ECommerce.Repository.Shared.Concrete;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ECommerce.Business.Configuration;
