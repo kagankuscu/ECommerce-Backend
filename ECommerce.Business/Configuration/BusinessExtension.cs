@@ -9,7 +9,7 @@ public static class BusinessExtension
 {
     public static void AddRepository(this IServiceCollection service)
     {
-        var types = Assembly.GetAssembly(typeof(RepositoryAssembly))
+        var types = Assembly.GetAssembly(typeof(RepositoryAssembly))!
             .GetTypes()
             .Where(t => t.IsClass && !t.IsAbstract && !t.IsInterface)
             .Where(t => !t.IsNested && !t.IsGenericType && !t.Name.Contains("Assembly"));
