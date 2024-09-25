@@ -39,6 +39,11 @@ public static class BusinessExtension
                 service.AddScoped(interfaceService, type);
         }
     }
+    public static void AddAutoMapper(this IServiceCollection service)
+    {
+        service.AddAutoMapper(Assembly.GetExecutingAssembly());
+    }
+
     private static bool IsCompilerGenerated(Type type)
     {
         return type.Name.Contains('<') || type.GetCustomAttributes(typeof(CompilerGeneratedAttribute), false).Any();
