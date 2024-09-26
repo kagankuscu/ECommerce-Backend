@@ -30,7 +30,7 @@ public static class BusinessExtension
         var types = Assembly.GetExecutingAssembly()
             .GetTypes()
             .Where(x => x.IsClass && !x.IsAbstract && !x.IsInterface && !IsCompilerGenerated(x))
-            .Where(x => !x.Name.Contains("Configuration"));
+            .Where(x => !x.FullName!.Contains("Configuration"));
 
         foreach (var type in types)
         {

@@ -8,4 +8,5 @@ public class Product : BaseModel
     public string? ProductImage { get; set; }
 
     public ProductCategory? ProductCategory { get; set; }
+    public ProductItem? ProductItem { get; set; }
 }
