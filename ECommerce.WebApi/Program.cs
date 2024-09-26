@@ -25,6 +25,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlSer
 builder.Services.AddRepository();
 builder.Services.AddBusiness();
 builder.Services.AddAutoMapper();
+builder.Services.AddDataShaper();
 
 var app = builder.Build();
 

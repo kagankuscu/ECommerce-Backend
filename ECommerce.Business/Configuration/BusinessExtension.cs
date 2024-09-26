@@ -1,5 +1,8 @@
 ﻿using System.Reflection;
 using System.Runtime.CompilerServices;
+using ECommerce.Business.Utils.Abstract;
+using ECommerce.Business.Utils.Concrete;
+using ECommerce.Models.Models;
 using ECommerce.Repository;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -30,7 +33,7 @@ public static class BusinessExtension
         var types = Assembly.GetExecutingAssembly()
             .GetTypes()
             .Where(x => x.IsClass && !x.IsAbstract && !x.IsInterface && !IsCompilerGenerated(x))
-            .Where(x => !x.FullName!.Contains("Configuration"));
+            .Where(x => !x.FullName!.Contains("Configuration") && !x.FullName.Contains("Utils"));
 
         foreach (var type in types)
         {
@@ -42,6 +45,11 @@ public static class BusinessExtension
     public static void AddAutoMapper(this IServiceCollection service)
     {
         service.AddAutoMapper(Assembly.GetExecutingAssembly());
+    }
+
+    public static void AddDataShaper(this IServiceCollection service)
+    {
+        service.AddScoped(typeof(IDataShaper<>), typeof(DataShaper<>));
     }
 
     private static bool IsCompilerGenerated(Type type)
