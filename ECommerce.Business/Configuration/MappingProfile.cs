@@ -12,5 +12,8 @@ public class MappingProfile : Profile
             .ForPath(p => p.ProductCategory!.CategoryName, opt => opt.MapFrom(pc => pc.CategoryName))
             .ForPath(p => p.ProductItem!.Price, opt => opt.MapFrom(pc => pc.Price))
             .ReverseMap();
+
+        CreateMap<CategoryGetDto, ProductCategory>()
+            .ReverseMap();
     }
 }
