@@ -56,11 +56,11 @@ public class DataShaper<T> : IDataShaper<T> where T : class
         foreach (var property in requiredProperties)
         {
             var objectPropertyValue = property.GetValue(entity);
-            shapedObject.Entity.TryAdd(property.Name, objectPropertyValue);
+            shapedObject.Entity!.TryAdd(property.Name, objectPropertyValue);
         }
 
-        var obejectProperty = entity.GetType().GetProperty("Id");
-        shapedObject.Id = (int)obejectProperty.GetValue(entity);
+        var objectProperty = entity.GetType().GetProperty("Id");
+        shapedObject.Id = (int)objectProperty?.GetValue(entity)!;
 
         return shapedObject;
     }
