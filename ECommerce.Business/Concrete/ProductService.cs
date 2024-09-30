@@ -22,7 +22,11 @@ public class ProductService : IProductService
 
     public async Task<Product?> GetProductByGuidAsync(Guid guid) => await _repository.GetProductByGuidAsync(guid);
 
-    public async Task<Product?> GetProductByIdAsync(int id) => await _repository.GetProductByIdAsync(id);
+    public async Task<ProductGetDto?> GetProductByIdAsync(int id)
+    {
+        var product = await GetAllProductsAsync();
+        return product.Where(p => p.Id == id).SingleOrDefault();
+    }
 
     public async Task<List<ProductGetDto>> GetAllProductsAsync()
     {
