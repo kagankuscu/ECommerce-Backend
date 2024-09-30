@@ -8,5 +8,5 @@ public class Product : BaseModel
     public string? ProductImage { get; set; }
 
     public ProductCategory? ProductCategory { get; set; }
-    public ProductItem? ProductItem { get; set; }
+    public ICollection<ProductItem>? ProductItems { get; set; } = [];
 }

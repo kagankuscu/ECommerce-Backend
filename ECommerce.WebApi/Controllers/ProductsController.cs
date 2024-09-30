@@ -21,5 +21,10 @@ namespace ECommerce.WebApi.Controllers
         {
             return Ok(await _productService.GetAllProductsAsync());
         }
+        [HttpGet("{id:int}")]
+        public async Task<IActionResult> GetById([FromRoute] int id)
+        {
+            return Ok(await _productService.GetProductByIdAsync(id));
+        }
     }
 }

@@ -32,7 +32,7 @@ public class ProductService : IProductService
     {
         List<Product> products = await _repository.GetAll()
             .Include(p => p.ProductCategory)
-            .Include(p => p.ProductItem)
+            .Include(p => p.ProductItems)
             .ToListAsync();
         return _mapper.Map<List<ProductGetDto>>(products);
     }
