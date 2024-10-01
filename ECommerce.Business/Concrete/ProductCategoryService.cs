@@ -3,6 +3,7 @@ using ECommerce.Business.Abstract;
 using ECommerce.Models.Dtos;
 using ECommerce.Models.Models;
 using ECommerce.Repository.Abstract;
+using Microsoft.EntityFrameworkCore;
 
 namespace ECommerce.Business.Concrete;
 
@@ -33,4 +34,13 @@ public class ProductCategoryService : IProductCategoryService
     public void RemoveProductCategoryByGuid(Guid guid) => _repository.RemoveProductCategoryByGuid(guid);
 
     public void UpdateProductCategory(ProductCategory productcategory) => _repository.UpdateProductCategory(productcategory);
+
+    public async Task<List<CategoryGetDto>> GetAllMainOrSubProductCategoriesAsync(bool isMain)
+    {
+        var categories =  await _repository.
+            GetAll().
+            Where(p => isMain ? p.ProductCategoryFK! == null : p.ProductCategoryFK != null).ToListAsync();
+
+        return _mapper.Map<List<CategoryGetDto>>(categories);
+    }
 }

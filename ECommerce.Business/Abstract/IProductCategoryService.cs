@@ -7,6 +7,7 @@ public interface IProductCategoryService
 {
     void AddProductCategory(ProductCategory productcategory);
     Task<List<CategoryGetDto>> GetAllProductCategoriesAsync();
+    Task<List<CategoryGetDto>> GetAllMainOrSubProductCategoriesAsync(bool isMain);
     Task<CategoryGetDto?> GetProductCategoryByIdAsync(int id);
     Task<CategoryGetDto?> GetProductCategoryByGuidAsync(Guid guid);
     void UpdateProductCategory(ProductCategory productcategory);

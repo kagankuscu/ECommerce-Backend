@@ -20,5 +20,11 @@ namespace ECommerce.WebApi.Controllers
         {
             return Ok(await _categoryService.GetAllProductCategoriesAsync());
         }
+
+        [HttpGet("MainOrSub")]
+        public async Task<IActionResult> GetAllMainOrSubCategories([FromQuery] bool isMain)
+        {
+            return Ok(await _categoryService.GetAllMainOrSubProductCategoriesAsync(isMain));
+        }
     }
 }
