@@ -4,6 +4,7 @@ using ECommerce.Models.Dtos;
 using ECommerce.Models.Models;
 using ECommerce.Models.RequestParameters;
 using ECommerce.Repository.Abstract;
+using ECommerce.Repository.Extension;
 using Microsoft.EntityFrameworkCore;
 
 namespace ECommerce.Business.Concrete;
@@ -33,6 +34,7 @@ public class ProductItemService : IProductItemService
         var productItems = await _repository.GetAll()
             .Include(pi => pi.Product)
             .ThenInclude(pi => pi!.ProductCategory)
+            .FilterProductItems(productItemParameters.CategoryName!)
             .ToListAsync();
 
         return PagedList<ProductItemGetDto>.ToPagedList(_mapper.Map<List<ProductItemGetDto>>(productItems), productItemParameters.PageNumber, productItemParameters.PublicSize);
