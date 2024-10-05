@@ -17,7 +17,8 @@ public class ProductItemsController : ControllerBase
     [HttpGet(Name = "GetAllProductItems")]
     public async Task<IActionResult> Get([FromQuery] ProductItemParameters productItemParameters)
     {
-        return Ok(await _productItemService.GetAllProductItemsAsync(productItemParameters));
+        var productItem = await _productItemService.GetAllProductItemsAsync(productItemParameters);
+        return Ok(new { productItem.MetaData, ProductItems = productItem });
     }
     [HttpGet("{id:int}")]
     public async Task<IActionResult> GetById([FromRoute] int id)
