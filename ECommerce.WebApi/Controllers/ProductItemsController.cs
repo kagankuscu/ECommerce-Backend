@@ -1,4 +1,5 @@
 using ECommerce.Business.Abstract;
+using ECommerce.Models.RequestParameters;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerce.WebApi.Controllers;
@@ -14,9 +15,9 @@ public class ProductItemsController : ControllerBase
         _productItemService = productItemService;
     }
     [HttpGet(Name = "GetAllProductItems")]
-    public async Task<IActionResult> Get()
+    public async Task<IActionResult> Get([FromQuery] ProductItemParameters productItemParameters)
     {
-        return Ok(await _productItemService.GetAllProductItemsAsync());
+        return Ok(await _productItemService.GetAllProductItemsAsync(productItemParameters));
     }
     [HttpGet("{id:int}")]
     public async Task<IActionResult> GetById([FromRoute] int id)

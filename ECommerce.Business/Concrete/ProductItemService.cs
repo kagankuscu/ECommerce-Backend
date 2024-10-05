@@ -2,6 +2,7 @@ using AutoMapper;
 using ECommerce.Business.Abstract;
 using ECommerce.Models.Dtos;
 using ECommerce.Models.Models;
+using ECommerce.Models.RequestParameters;
 using ECommerce.Repository.Abstract;
 using Microsoft.EntityFrameworkCore;
 
@@ -24,18 +25,17 @@ public class ProductItemService : IProductItemService
 
     public async Task<ProductItemGetDto?> GetProductItemByIdAsync(int id)
     {
-        var productItem = await GetAllProductItemsAsync();
-        return productItem.Where(p => p.Id == id).SingleOrDefault();
+        return _mapper.Map<ProductItemGetDto>(await _repository.GetAll(p => p.Id == id).SingleOrDefaultAsync());
     }
 
-    public async Task<List<ProductItemGetDto>> GetAllProductItemsAsync()
+    public async Task<PagedList<ProductItemGetDto>> GetAllProductItemsAsync(ProductItemParameters productItemParameters)
     {
         var productItems = await _repository.GetAll()
             .Include(pi => pi.Product)
             .ThenInclude(pi => pi!.ProductCategory)
             .ToListAsync();
 
-        return _mapper.Map<List<ProductItemGetDto>>(productItems);
+        return PagedList<ProductItemGetDto>.ToPagedList(_mapper.Map<List<ProductItemGetDto>>(productItems), productItemParameters.PageNumber, productItemParameters.PublicSize);
     }
 
     public void RemoveProductItemByGuid(Guid guid) => _repository.RemoveProductItemByGuid(guid);
