@@ -25,4 +25,9 @@ public class ProductItemsController : ControllerBase
     {
         return Ok(await _productItemService.GetProductItemByIdAsync(id));
     }
+    [HttpGet("RelatedProductItems")]
+    public async Task<IActionResult> GetRelatedProductItem([FromQuery] ProductItemRelatedParameters productItemRelatedParameters)
+    {
+        return Ok(await _productItemService.GetRelatedProductItemAsync(productItemRelatedParameters));
+    }
 }

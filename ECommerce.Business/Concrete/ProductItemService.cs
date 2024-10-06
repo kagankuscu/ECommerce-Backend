@@ -1,3 +1,4 @@
+using System.Net.NetworkInformation;
 using AutoMapper;
 using ECommerce.Business.Abstract;
 using ECommerce.Models.Dtos;
@@ -40,7 +41,7 @@ public class ProductItemService : IProductItemService
         var productItems = await _repository.GetAll()
             .Include(pi => pi.Product)
             .ThenInclude(pi => pi!.ProductCategory)
-            .FilterProductItems(productItemParameters.CategoryName!)
+            .FilterProductItemsByCategoryName(productItemParameters.CategoryName!)
             .ToListAsync();
 
         return PagedList<ProductItemGetDto>.ToPagedList(_mapper.Map<List<ProductItemGetDto>>(productItems), productItemParameters.PageNumber, productItemParameters.PublicSize);
@@ -49,4 +50,20 @@ public class ProductItemService : IProductItemService
     public void RemoveProductItemByGuid(Guid guid) => _repository.RemoveProductItemByGuid(guid);
 
     public void UpdateProductItem(ProductItem productitem) => _repository.UpdateProductItem(productitem);
+
+    public async Task<List<ProductItemGetDto>> GetRelatedProductItemAsync(ProductItemRelatedParameters productItemRelatedParameters)
+    {
+        var productItems = await _repository.GetAll()
+            .Include(pi => pi.Product)
+            .ThenInclude(pi => pi!.ProductCategory)
+            .FilterProductItemsByCategoryName(productItemRelatedParameters.CategoryName!)
+            .FilterProductItemsBetweenByPrice(
+                Convert.ToInt32(productItemRelatedParameters.Price) - productItemRelatedParameters.MinPrice,
+                Convert.ToInt32(productItemRelatedParameters.Price) + productItemRelatedParameters.MaxPrice)
+            .Take(8)
+            .OrderBy(pi => Guid.NewGuid())
+            .ToListAsync();
+
+        return _mapper.Map<List<ProductItemGetDto>>(productItems);
+    }
 }
