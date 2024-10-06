@@ -26,7 +26,13 @@ public class ProductItemService : IProductItemService
 
     public async Task<ProductItemGetDto?> GetProductItemByIdAsync(int id)
     {
-        return _mapper.Map<ProductItemGetDto>(await _repository.GetAll(p => p.Id == id).SingleOrDefaultAsync());
+        var productItem = await _repository
+            .GetAll(p => p.Id == id)
+            .Include(p => p.Product)
+            .ThenInclude(p => p!.ProductCategory)
+            .SingleOrDefaultAsync();
+
+        return _mapper.Map<ProductItemGetDto>(productItem);
     }
 
     public async Task<PagedList<ProductItemGetDto>> GetAllProductItemsAsync(ProductItemParameters productItemParameters)
